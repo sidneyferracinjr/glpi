@@ -18,4 +18,16 @@ RUN mkdir --parents /home/www-data \
   && usermod --home /home/www-data www-data
 VOLUME /home/www-data
 
+# Define the DocumentRoot correctly for GLPI
+RUN echo "DocumentRoot /var/www/html" >> /etc/apache2/sites-available/000-default.conf
+
+# Set the ServerName to avoid the warning
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# Change the working directory to /var/www/html
+WORKDIR /var/www/html
+
+# Expose port for Apache
+EXPOSE 80
+
 USER www-data
